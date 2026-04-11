@@ -22,7 +22,7 @@ def bs_call_delta(S, K, tau, r, sigma, eps=1e-6):
 
 
 @torch.no_grad()
-def delta_hedge_pnl(S, payoff_fn, K=1.0, r=0.0, sigma=0.2):
+def delta_hedge_pnl(S, payoff_fn, K=100.0, r=0.0, sigma=0.2):
     """
     S: (N, T+1)
     payoff_fn: callable

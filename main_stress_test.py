@@ -35,7 +35,7 @@ def main():
         ),
         "CVaR": load_policy(
             "results/deep_hedge_var_cvar_annealed.pth",
-            action_dim=2   # IMPORTANT
+            action_dim=1
         ),
     }
 
