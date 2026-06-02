@@ -78,7 +78,7 @@ GATE_WIDTH = 0.3
 
 def load_generator(path="results/nsde/nsde_generator.pth"):
     """Load saved NSDEGenerator and normalisation stats."""
-    ckpt = torch.load(path, map_location="cpu")
+    ckpt = torch.load(path, map_location="cpu", weights_only=False)
     hp = ckpt["hparams"]
     gen = NSDEGenerator(
         noise_dim=hp["noise_dim"],
