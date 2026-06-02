@@ -1773,6 +1773,88 @@ transaction costs ($0$--$0.30$ pts), and (iii) the gate width
 ($w \in [0.15, 0.60]$). The three-dimensional robustness check
 strengthens the Week-13 conclusion substantially.
 
+\section{Post-Week-13 Step 4a: LSTM Online Gate (Negative Result)}
+\label{sec:step4a}
+
+\subsection{Motivation}
+
+The scalar sigmoid gate at $\theta = 3.0$ uses $V_t / V_0$ (normalised
+VIX relative to window-start) to detect crises. This fires quickly on
+spike crises (COVID March 2020) but may be too slow for slow-drift
+regimes (2022 rate shock: VIX rose from 17 to 35 over 12 months). A
+small LSTM gate that sees the \emph{trajectory} of $(S_t, VS_t, \delta_S,
+\delta_V)$ could in principle detect slow-drift crises earlier.
+
+\subsection{Architecture and two-stage training}
+
+A 4-input LSTM (hidden dim = 16, 1 layer) replaces the scalar sigmoid.
+To avoid the pooled-regime gradient contamination identified in Week 13
+(joint training causes the gate to close everywhere), we use a
+\textbf{two-stage protocol}:
+\begin{enumerate}
+  \item \textbf{Stage 1} (400 epochs): train the policy MLP with the gate
+        frozen at its initial open value ($\approx 0.73$).
+  \item \textbf{Stage 2} (200 epochs): freeze the policy; train only the
+        LSTM gate on the validation bootstrap pool.
+\end{enumerate}
+
+\subsection{Pre-registered decision rules}
+\begin{itemize}
+  \item 2024 OOT win preserved: $\bar{\Delta} > 0$ and
+        $\hat{\sigma} < |\bar{\Delta}|$.
+  \item 2022 improvement: LSTM mean $\Delta_{2022}$ $>$ scalar gate
+        mean $\Delta_{2022} = -0.87$.
+\end{itemize}
+
+\subsection{Results}
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Window & LSTM mean & LSTM std & Scalar (Step 1) & Improvement \
+\midrule
+\textbf{2024 Full year} & $\mathbf{+1.136}$ & $\mathbf{0.065}$ & $+1.112$ & $+0.024$ \
+2017 Calm      & $+0.483$ & $0.116$ & $-0.440$ & $+0.923$ \
+2023 SVB       & $+0.061$ & $0.305$ & $-0.350$ & $+0.411$ \
+2022 Rate shock & $-2.265$ & $0.923$ & $-0.870$ & $-1.395$ \
+2020 COVID     & $-7.815$ & $5.723$ & $-1.177$ & $-6.638$ \
+2008 GFC       & $-7.776$ & $3.597$ & $-2.530$ & $-5.246$ \
+\bottomrule
+\end{tabular}
+\caption{LSTM gate vs scalar gate ($\theta=3.0$), 5 seeds.
+The 2024 calm-market win is preserved (+1.136, pre-registered PASS)
+but the 2022 rate-shock gap is not improved (FAIL).}
+\label{tab:step4a}
+\end{table}
+
+\paragraph{Verdict: PARTIAL.}
+Rule 1 (2024 OOT win preserved) passes. Rule 2 (2022 improvement)
+fails: the LSTM gate degrades 2022 from $-0.87$ to $-2.27$.
+
+\subsection{Interpretation}
+
+The LSTM gate improves calm-market windows (2017, 2023, 2024) but
+worsens all crisis windows. This reveals a structural limitation of
+the two-stage approach: Stage 2 trains the gate on a synthetic
+bootstrap of the full 2021--2024 pool, which does not specifically
+highlight the slow-drift 2022 trajectory. The gate therefore learns a
+general ``suppress VIX in high-vol conditions'' rule that is too
+aggressive, hurting both 2022 and crisis periods.
+
+The COVID seed-variance remains high ($\pm 5.72$), confirming the
+LSTM gate has not solved the crisis instability. The scalar gate at
+$\theta = 3.0$ (Step 1) remains the preferred architecture.
+
+\paragraph{Contribution.}
+This is a publishable negative result: more expressive gating does not
+help under the two-stage training protocol. The constraint is not the
+gate capacity but the training signal available for regime detection.
+Fixing this would require either (i) direct supervision of the gate
+on labelled regime data, or (ii) the Neural SDE approach (Step 3)
+which provides richer training scenarios.
+
 
 \begin{thebibliography}{99}
 
