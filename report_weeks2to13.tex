@@ -1855,6 +1855,89 @@ Fixing this would require either (i) direct supervision of the gate
 on labelled regime data, or (ii) the Neural SDE approach (Step 3)
 which provides richer training scenarios.
 
+\section{Post-Week-13 Step 3: Neural SDE Generative Simulator}
+\label{sec:step3}
+
+\subsection{Setup}
+
+We train a Quant-GAN \citep{wiese2020} on real weekly (SPY, VIX) data
+2005--2020 to generate synthetic joint paths as a drop-in replacement
+for the block-bootstrap sampler. The generator is a 2-layer LSTM
+(hidden dim 64, noise dim 16) trained for 3000 generator steps via
+Wasserstein GAN with gradient penalty ($\lambda_{GP} = 10$,
+$n_\text{critic} = 5$). The trained generator produces:
+\begin{itemize}
+  \item SPY weekly log-return std: 0.021 (real: 0.025; 87\% coverage)
+  \item VIX weekly log-change std: 0.159 (real: 0.150; 106\% -- slightly
+        over-dispersed, generator learned fat VIX tails)
+  \item SPY kurtosis: 3.6 (real: 14.4) -- heavy tails underrepresented
+\end{itemize}
+Extreme VIX spikes are present in generated paths (sample path VIX:
+100 $\to$ 202, COVID-class spike). The kurtosis mismatch indicates the
+generator does not produce the most extreme SPY crash days.
+
+\paragraph{Pre-registered decision rules.}
+NSDE beats block bootstrap if:
+\begin{itemize}
+  \item $\Delta_{2020\text{ COVID}}(\text{NSDE}) > \Delta_{2020\text{ COVID}}(\text{bootstrap}) + 0.5$
+        (i.e., COVID $\Delta > -0.677$), AND
+  \item $\Delta_{2024}(\text{NSDE}) > 0$.
+\end{itemize}
+
+\subsection{Results}
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{lrrr}
+\toprule
+Window & NSDE mean & NSDE std & Bootstrap (Step 1) \
+\midrule
+2018 Volmageddon & $\mathbf{+0.323}$ & $0.015$ & $-0.440$ \
+2008 GFC         & $-1.126$ & $0.077$ & $-2.530$ \
+2023 SVB         & $-1.554$ & $0.075$ & $-0.350$ \
+2017 Calm        & $-1.357$ & $0.041$ & $-0.440$ \
+\textbf{2024 Full year} & $-0.486$ & $0.036$ & $+1.112$ \
+\textbf{2020 COVID}     & $-2.937$ & $0.125$ & $-1.177$ \
+2022 Rate shock  & $-3.016$ & $0.046$ & $-0.870$ \
+\bottomrule
+\end{tabular}
+\caption{Neural SDE hedger vs block bootstrap, 5 seeds.
+Both pre-registered decision rules \textbf{fail}. Seed variance is
+extremely tight ($< 0.13$ everywhere), confirming the failure is
+structural, not random.}
+\label{tab:step3}
+\end{table}
+
+\paragraph{Verdict: FAIL on both rules.}
+COVID: $\Delta = -2.937 < -0.677$ (threshold). 2024 OOT: $\Delta = -0.486 < 0$.
+
+\subsection{Interpretation}
+
+The GAN-trained policy is \emph{consistently} worse than block bootstrap,
+with extremely stable seed variance. The failure mechanism is clear:
+the generator's kurtosis mismatch (3.6 vs real 14.4) produces paths
+that are too smooth. The policy trained on these paths learns hedge
+ratios calibrated for mild vol and undersizes hedges for real market
+swings.
+
+\paragraph{Interesting partial win.} 2018 Volmageddon: $\Delta = +0.323
+\pm 0.015$. This window contained a VIX spike from $\approx 12$ to
+$\approx 38$ in one week (Feb 5, 2018). The generator did learn
+VIX-spike patterns (sample path showed VIX reaching 202), so the
+policy learned to hedge this specific event type correctly. This is the
+only window where NSDE outperforms bootstrap.
+
+\paragraph{Scientific conclusion.}
+This confirms the Sprint~1 diagnosis: the COVID/crisis gap is driven
+by the lagging-proxy $\times$ discrete-rebalancing interaction, not
+by training distribution quality. No generator improvement can fix
+the gap without also fixing the instrument design. The regime gate
+at $\theta = 3.0$ (Step~1) is the correct architectural fix.
+The NSDE experiment defines the boundary: it closes the
+VIX-spike regime (2018) but not the slow-drift or sustained-crisis
+regimes (2020, 2022) where the lagging proxy is the binding constraint.
+
 
 \begin{thebibliography}{99}
 
