@@ -8,7 +8,9 @@ results/
 # Documents — not for version control
 *.tex
 *.pdf
-*.md
+# *.md excluded below — README.md is tracked
+week*.md
+supervisor_memo*
 *.pptx
 *.ppt
 *.docx
