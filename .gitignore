@@ -4,11 +4,8 @@ __pycache__/
 results/
 *.pt
 *.pth
-
-# Documents — not for version control
 *.tex
 *.pdf
-# *.md excluded below — README.md is tracked
 week*.md
 supervisor_memo*
 *.pptx
@@ -21,18 +18,3 @@ supervisor_memo*
 *.dot
 *.log
 *.DS_Store
-
-# Utility/report-generation scripts (not part of the experiment pipeline)
-add_slide8.py
-fix_slide3_text.py
-make_flowchart.py
-make_report_pdf.py
-make_report_plots.py
-make_supervisor_deck.py
-make_threshold_sweep_plot.py
-render_heston_eq.py
-render_loss_eq.py
-update_slide3.py
-update_slide3_market.py
-update_slides3_and_4.py
-backtest_report.py
