@@ -43,16 +43,16 @@ cvar_entropic = pnl_entropic[pnl_entropic <= np.quantile(pnl_entropic, q)].mean(
 cvar_cvar = pnl_cvar[pnl_cvar <= np.quantile(pnl_cvar, q)].mean()
 
 labels = [
-    "Delta",
-    "Variance",
-    "Entropic",
-    "CVaR"
+ "Delta",
+ "Variance",
+ "Entropic",
+ "CVaR"
 ]
 values = [
-    cvar_delta,
-    cvar_var,
-    cvar_entropic,
-    cvar_cvar
+ cvar_delta,
+ cvar_var,
+ cvar_entropic,
+ cvar_cvar
 ]
 
 plt.figure(figsize=(7, 5))
@@ -72,16 +72,16 @@ var_entropic = np.var(pnl_entropic)
 var_cvar = np.var(pnl_cvar)
 
 labels = [
-    "Delta",
-    "Variance",
-    "Entropic",
-    "CVaR"
+ "Delta",
+ "Variance",
+ "Entropic",
+ "CVaR"
 ]
 values = [
-    var_delta,
-    var_var,
-    var_entropic,
-    var_cvar
+ var_delta,
+ var_var,
+ var_entropic,
+ var_cvar
 ]
 
 plt.figure(figsize=(7, 5))

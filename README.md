@@ -17,19 +17,19 @@ This repository contains the full implementation for a DDP thesis that trains de
 1. [Repository Structure](#repository-structure)
 2. [Environment Setup](#environment-setup)
 3. [Experiment Replication Guide](#experiment-replication-guide)
-   - [Week 1 — Baseline: CVaR Hedging under Heston](#week-1--baseline-cvar-hedging-under-heston)
-   - [Week 2 — Jump Robustness: Bates Model](#week-2--jump-robustness-bates-model)
-   - [Week 3 — Bootstrap Significance Testing](#week-3--bootstrap-significance-testing)
-   - [Week 4 — SPX-Calibrated Parameters](#week-4--spx-calibrated-parameters)
-   - [Week 5 — Benchmarking and Interpretability](#week-5--benchmarking-and-interpretability)
-   - [Week 6 — Multi-Asset Spread Option Hedging](#week-6--multi-asset-spread-option-hedging)
-   - [Week 7 — Ablations, Greeks, and Historical Stress Test](#week-7--ablations-greeks-and-historical-stress-test)
-   - [Week 8 — Sim-to-Real Transfer](#week-8--sim-to-real-transfer)
-   - [Week 9 — Backtest-Based Training](#week-9--backtest-based-training)
-   - [Week 10 — Expanded Real-Market Corpus](#week-10--expanded-real-market-corpus)
-   - [Week 11 — VIX Futures as a Vega Instrument](#week-11--vix-futures-as-a-vega-instrument)
-   - [Week 12 — Multi-Seed Verification](#week-12--multi-seed-verification)
-   - [Week 13 — Regime-Gated Architecture (Main Result)](#week-13--regime-gated-architecture-main-result)
+   - [Part 1 — Baseline: CVaR Hedging under Heston](#part-1--baseline-cvar-hedging-under-heston)
+   - [Part 2 — Jump Robustness: Bates Model](#part-2--jump-robustness-bates-model)
+   - [Part 3 — Bootstrap Significance Testing](#part-3--bootstrap-significance-testing)
+   - [Part 4 — SPX-Calibrated Parameters](#part-4--spx-calibrated-parameters)
+   - [Part 5 — Benchmarking and Interpretability](#part-5--benchmarking-and-interpretability)
+   - [Part 6 — Multi-Asset Spread Option Hedging](#part-6--multi-asset-spread-option-hedging)
+   - [Part 7 — Ablations, Greeks, and Historical Stress Test](#part-7--ablations-greeks-and-historical-stress-test)
+   - [Part 8 — Sim-to-Real Transfer](#part-8--sim-to-real-transfer)
+   - [Part 9 — Backtest-Based Training](#part-9--backtest-based-training)
+   - [Part 10 — Expanded Real-Market Corpus](#part-10--expanded-real-market-corpus)
+   - [Part 11 — VIX Futures as a Vega Instrument](#part-11--vix-futures-as-a-vega-instrument)
+   - [Part 12 — Multi-Seed Verification](#part-12--multi-seed-verification)
+   - [Part 13 — Regime-Gated Architecture (Main Result)](#part-13--regime-gated-architecture-main-result)
 4. [Key Results Summary](#key-results-summary)
 5. [Recommended Replication Order](#recommended-replication-order)
 6. [Data Dependencies](#data-dependencies)
@@ -109,39 +109,39 @@ Deep-Hedging-Cvar-Heston/
 ├── instruments/
 │   └── options.py           # Option payoff definitions
 │
-├── main.py                          # Week 1: Base CVaR (stock only)
-├── main_variance.py                 # Week 1: Variance objective
-├── main_entropic.py                 # Week 1: Entropic objective
-├── main_varswap_cvar.py             # Week 1: CVaR + variance swap
-├── main_varswap_variance.py         # Week 1: Variance + variance swap
-├── main_varswap_entropic.py         # Week 1: Entropic + variance swap
-├── main_bates.py                    # Week 2: Bates jump model
-├── main_bootstrap.py                # Week 3: Bootstrap CIs
-├── main_calibrated.py               # Week 4: SPX-calibrated Heston
-├── main_spx_calibration.py          # Week 4: Calibration fitting
-├── main_heston_benchmark.py         # Week 5: Delta-vega benchmark
-├── main_otm_sweep.py                # Week 5: OTM strike sweep
-├── main_hedge_analysis.py           # Week 5: Hedge ratio analysis
-├── main_learning_curve.py           # Week 5: Learning curves
-├── main_multi_asset.py              # Week 6: Multi-asset spread option
-├── main_ablation_mean_cvar.py       # Week 7: Mean-CVaR trade-off
-├── main_ablation_design.py          # Week 7: Architecture ablation
-├── main_greeks_decomposition.py     # Week 7: Greeks decomposition
-├── main_historical_stress.py        # Week 7: Historical stress test
-├── main_path_dependent.py           # Week 7: Path-dependent options
-├── main_misspecification.py         # Week 7: Model misspecification
-├── main_robust_training.py          # Week 7: Domain randomization
-├── main_sim_to_real.py              # Week 8: Sim-to-real transfer
-├── main_sim_to_real_earlystop.py    # Week 8: Early stopping variant
-├── main_backtest_training.py        # Week 9: Backtest-based training
-├── main_expanded_corpus.py          # Week 10: Expanded real corpus
-├── main_vix_futures.py              # Week 11: Naive VIX adaptation
-├── main_vix_futures_v2.py           # Week 11: Leverage-corrected VIX
-├── main_vix_multiseed.py            # Week 12: Plain-Adam multi-seed
-├── main_vix_gated_multiseed.py      # Week 13: Regime-gated multi-seed
-├── main_vix_mom_multiseed.py        # Week 13: MoM multi-seed (negative)
-├── main_nsde_hedge.py               # Post-W13: Neural SDE hedge
-├── main_nsde_train.py               # Post-W13: Neural SDE training
+├── main.py                          # Part 1: Base CVaR (stock only)
+├── main_variance.py                 # Part 1: Variance objective
+├── main_entropic.py                 # Part 1: Entropic objective
+├── main_varswap_cvar.py             # Part 1: CVaR + variance swap
+├── main_varswap_variance.py         # Part 1: Variance + variance swap
+├── main_varswap_entropic.py         # Part 1: Entropic + variance swap
+├── main_bates.py                    # Part 2: Bates jump model
+├── main_bootstrap.py                # Part 3: Bootstrap CIs
+├── main_calibrated.py               # Part 4: SPX-calibrated Heston
+├── main_spx_calibration.py          # Part 4: Calibration fitting
+├── main_heston_benchmark.py         # Part 5: Delta-vega benchmark
+├── main_otm_sweep.py                # Part 5: OTM strike sweep
+├── main_hedge_analysis.py           # Part 5: Hedge ratio analysis
+├── main_learning_curve.py           # Part 5: Learning curves
+├── main_multi_asset.py              # Part 6: Multi-asset spread option
+├── main_ablation_mean_cvar.py       # Part 7: Mean-CVaR trade-off
+├── main_ablation_design.py          # Part 7: Architecture ablation
+├── main_greeks_decomposition.py     # Part 7: Greeks decomposition
+├── main_historical_stress.py        # Part 7: Historical stress test
+├── main_path_dependent.py           # Part 7: Path-dependent options
+├── main_misspecification.py         # Part 7: Model misspecification
+├── main_robust_training.py          # Part 7: Domain randomization
+├── main_sim_to_real.py              # Part 8: Sim-to-real transfer
+├── main_sim_to_real_earlystop.py    # Part 8: Early stopping variant
+├── main_backtest_training.py        # Part 9: Backtest-based training
+├── main_expanded_corpus.py          # Part 10: Expanded real corpus
+├── main_vix_futures.py              # Part 11: Naive VIX adaptation
+├── main_vix_futures_v2.py           # Part 11: Leverage-corrected VIX
+├── main_vix_multiseed.py            # Part 12: Plain-Adam multi-seed
+├── main_vix_gated_multiseed.py      # Part 13: Regime-gated multi-seed
+├── main_vix_mom_multiseed.py        # Part 13: MoM multi-seed (negative)
+├── main_nsde_hedge.py               # Neural SDE hedge
+├── main_nsde_train.py               # Neural SDE training
 ├── main_regime_switching.py         # Regime-switching Heston
 ├── main_risk_comparison.py          # Clean risk-measure comparison
 ├── main_significance_test.py        # Statistical significance
@@ -174,7 +174,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-**GPU:** All scripts auto-detect CUDA. Training on CPU is supported but ~5× slower for multi-seed runs. A single A100/V100 epoch of 400 epochs takes ~8 minutes per seed.
+**GPU:** All scripts auto-detect CUDA. Training on CPU is supported but ~5× slower for multi-seed runs. A full 400-epoch multi-seed run takes approximately 8 minutes per seed on a single A100/V100.
 
 **Output directory:** All scripts write results to `results/`. This directory is created automatically and is excluded from version control.
 
@@ -186,9 +186,9 @@ All Δ values reported are **CVaR improvement over the Black-Scholes delta-hedge
 
 ---
 
-### Week 1 — Baseline: CVaR Hedging under Heston
+### Part 1 — Baseline: CVaR Hedging under Heston
 
-**Goal:** Establish that (a) a CVaR-trained deep hedger beats BS delta-hedge on simulated Heston paths, and (b) adding a variance swap as a second instrument further improves CVaR.
+**Goal:** Establish that (a) a CVaR-trained deep hedger beats the BS delta-hedge on simulated Heston paths, and (b) adding a variance swap as a second instrument further improves CVaR.
 
 **Default hyperparameters:** N=10 000 paths, T=30 steps, lr=3e-4, 200 epochs, α=0.05 (CVaR level).
 
@@ -218,7 +218,7 @@ python main_varswap_entropic.py
 
 ---
 
-### Week 2 — Jump Robustness: Bates Model
+### Part 2 — Jump Robustness: Bates Model
 
 **Goal:** Check whether the variance-swap advantage survives when stock prices can jump (Bates = Heston + compound Poisson jumps).
 
@@ -233,11 +233,11 @@ python plot_bates_comparison.py  # produces results/bates_comparison.png
 
 ---
 
-### Week 3 — Bootstrap Significance Testing
+### Part 3 — Bootstrap Significance Testing
 
-**Goal:** Confirm all Week 1 CVaR improvements are statistically significant (95% bootstrap CIs do not include zero improvement).
+**Goal:** Confirm all Part 1 CVaR improvements are statistically significant (95% bootstrap CIs do not include zero improvement).
 
-**Prerequisite:** Run all six Week 1 scripts first so the `.pth` weight files exist.
+**Prerequisite:** Run all six Part 1 scripts first so the `.pth` weight files exist.
 
 ```bash
 python main_bootstrap.py
@@ -248,9 +248,9 @@ python plot_cvar_confidence_intervals.py
 
 ---
 
-### Week 4 — SPX-Calibrated Parameters
+### Part 4 — SPX-Calibrated Parameters
 
-**Goal:** Replace the default synthetic Heston parameters with parameters calibrated to real SPX implied volatility surface, and verify the CVaR advantage holds under realistic calibration.
+**Goal:** Replace the default synthetic Heston parameters with parameters calibrated to the real SPX implied volatility surface, and verify the CVaR advantage holds under realistic calibration.
 
 ```bash
 # Fit Heston parameters to SPX options (requires internet for yfinance)
@@ -264,7 +264,7 @@ python main_calibrated.py
 
 ---
 
-### Week 5 — Benchmarking and Interpretability
+### Part 5 — Benchmarking and Interpretability
 
 **Goal:** Compare the deep hedger against the analytical Heston delta-vega hedge, run an OTM strike sweep, and inspect learned hedge ratios.
 
@@ -288,7 +288,7 @@ python main_learning_curve.py
 
 ---
 
-### Week 6 — Multi-Asset Spread Option Hedging
+### Part 6 — Multi-Asset Spread Option Hedging
 
 **Goal:** Extend the framework to a two-asset spread call under correlated Heston dynamics, with four tradable instruments (S¹, S², VS¹, VS²). Baseline is the Margrabe exchange-option analytical delta.
 
@@ -302,7 +302,7 @@ python main_multi_asset.py
 
 ---
 
-### Week 7 — Ablations, Greeks, and Historical Stress Test
+### Part 7 — Ablations, Greeks, and Historical Stress Test
 
 Multiple independent experiments; run in any order.
 
@@ -332,16 +332,16 @@ python main_historical_stress.py
 python main_significance_test.py
 ```
 
-**Key result for stress test:** Policy trained on Heston simulation shows degradation on real crisis data — the sim-to-real gap that motivates Weeks 8–13.
+**Key result for stress test:** Policy trained on Heston simulation shows degradation on real crisis data — the sim-to-real gap that motivates Parts 8–13.
 
 ---
 
-### Week 8 — Sim-to-Real Transfer
+### Part 8 — Sim-to-Real Transfer
 
-**Goal:** Train on simulated Heston paths, evaluate on rolling 30-day SPX windows. Honest negative result: mean P&L is positive (implying a speculative bias) and the tail CVaR on real data is worse than on simulation.
+**Goal:** Train on simulated Heston paths, evaluate on rolling 30-day SPX windows. Honest negative result: mean P&L is positive (implying speculative bias) and the tail CVaR on real crisis data is worse than on simulation.
 
 ```bash
-# Standard sim-to-real
+# Standard sim-to-real transfer
 python main_sim_to_real.py
 
 # With early stopping on simulated validation set
@@ -354,9 +354,9 @@ python main_sim_to_real_earlystop.py
 
 ---
 
-### Week 9 — Backtest-Based Training
+### Part 9 — Backtest-Based Training
 
-**Goal:** Replace simulated training with rolling windows from real SPX data (a partial positive result). Shows regime coverage alone closes ~23% of the COVID gap.
+**Goal:** Replace simulated training with rolling windows from real SPX data. Shows regime coverage alone closes ~23% of the COVID gap (partial positive result).
 
 ```bash
 python main_backtest_training.py
@@ -366,24 +366,24 @@ python main_backtest_training.py
 
 ---
 
-### Week 10 — Expanded Real-Market Corpus
+### Part 10 — Expanded Real-Market Corpus
 
-**Goal:** Add 2008 GFC, 2018 Volmageddon, 2022 rate-shock windows to training data to test the regime-coverage hypothesis.
+**Goal:** Add 2008 GFC, 2018 Volmageddon, and 2022 rate-shock windows to training data to directly test the regime-coverage hypothesis.
 
 ```bash
 python main_expanded_corpus.py
 ```
 
-**Expected outputs:** Per-window CVaR table showing failure of the regime-coverage hypothesis: adding crisis data does not fix crisis performance, and degrades calm performance.
+**Expected outputs:** Per-window CVaR table showing that adding crisis data to training does not fix crisis performance and degrades calm performance — the regime-coverage hypothesis fails.
 
 ---
 
-### Week 11 — VIX Futures as a Vega Instrument
+### Part 11 — VIX Futures as a Vega Instrument
 
-**Goal:** Replace the synthetic variance swap with VIX futures (a real, tradable vega instrument). Two versions: naive and leverage-corrected.
+**Goal:** Replace the synthetic variance swap with VIX futures (a real, tradable vega instrument). Two versions tested: naive and leverage-corrected.
 
 ```bash
-# Naive VIX adaptation (negative result)
+# Naive VIX adaptation (negative result — scale mismatch)
 python main_vix_futures.py
 
 # Leverage-corrected VIX policy (the working version)
@@ -392,13 +392,13 @@ python main_vix_futures_v2.py
 
 **Expected outputs:** Console tables for calm and crisis windows, VIX gate activation plots.
 
-**Key result:** Leverage-corrected VIX policy achieves +1.16 ± 0.06 on 2024 OOT (calm), but −8.05 ± 4.96 on 2020 COVID with high seed variance — the instability that Week 12 characterises.
+**Key result:** Leverage-corrected VIX policy achieves +1.16 ± 0.06 on 2024 OOT (calm), but −8.05 ± 4.96 on 2020 COVID with high seed variance — the instability characterised in Part 12.
 
 ---
 
-### Week 12 — Multi-Seed Verification
+### Part 12 — Multi-Seed Verification
 
-**Goal:** Run the leverage-corrected VIX policy at 5 seeds to characterise the domain of validity precisely. Pre-register decision rules before any Week-13 code runs.
+**Goal:** Run the leverage-corrected VIX policy at 5 seeds to precisely characterise its domain of validity. Decision rules are pre-registered before any Part 13 code runs.
 
 ```bash
 # 5 seeds, calm mode (2017 + 2024 OOT)
@@ -408,17 +408,17 @@ python main_vix_multiseed.py --mode calm --seeds 5 --epochs 400
 python main_vix_multiseed.py --mode covid --seeds 5 --epochs 400
 ```
 
-**Pre-registered decision rules (from Week 12, unchanged in Week 13):**
+**Pre-registered decision rules (fixed before Part 13):**
 - 2024 OOT win is real iff mean Δ > 0 AND seed-std < |mean Δ|
 - 2020 COVID closure is real iff mean Δ > −2.5 AND seed-std < 2.0
 
-**Key result:** 2024 OOT: +1.16 ± 0.06 (rule MET). 2020 COVID: −8.05 ± 4.96 (rule FAILS — seed-std far too large). This characterises the problem precisely for Week 13.
+**Key result:** 2024 OOT: +1.16 ± 0.06 (rule MET). 2020 COVID: −8.05 ± 4.96 (rule FAILS — seed-std far too large). Problem precisely characterised for Part 13.
 
 ---
 
-### Week 13 — Regime-Gated Architecture (Main Result)
+### Part 13 — Regime-Gated Architecture (Main Result)
 
-Two candidate fixes tested in order; Option B first (falsified), Option A second (confirmed).
+Two candidate fixes tested in order. Option B falsified first, Option A confirmed second.
 
 #### Option B — Median-of-Means Optimiser (Negative Result)
 
@@ -430,29 +430,22 @@ python main_vix_mom_multiseed.py --mode calm --seeds 5 --epochs 400
 python main_vix_mom_multiseed.py --mode covid --seeds 5 --epochs 400
 ```
 
-**Expected result:** COVID worsens to −17.88 ± 5.50 (doubled from baseline). MoM is structurally wrong for CVaR: tail gradients are signal, not noise.
+**Expected result:** COVID worsens to −17.88 ± 5.50 (doubled from baseline). MoM is structurally wrong for CVaR: high-magnitude gradients from the tail are signal, not noise — MoM suppresses exactly what CVaR needs.
 
 #### Option A — Regime-Gated Architecture (Confirmed)
 
-The gate is a frozen sigmoid: `gate(v) = σ((v_norm − θ) / w)` where v_norm = current VIX / window-start VIX. The VIX action is multiplied by `(1 − gate)` — hedging turns off when VIX has spiked beyond threshold.
+The gate is a frozen sigmoid: `gate(v) = σ((v_norm − θ) / w)` where `v_norm = current VIX / window-start VIX`. The VIX action is multiplied by `(1 − gate)` — VIX hedging turns off when VIX has spiked beyond threshold.
 
-**Threshold sweep (run first, all other hyperparameters frozen):**
+**Threshold sweep** (run first, all other hyperparameters frozen at Part 12 values):
 
 ```bash
-# θ = 2.0
 python main_vix_gated_multiseed.py --mode calm --threshold 2.0 --width 0.3 --seeds 5 --epochs 400
-
-# θ = 2.5
 python main_vix_gated_multiseed.py --mode calm --threshold 2.5 --width 0.3 --seeds 5 --epochs 400
-
-# θ = 3.0  ← sweet spot
-python main_vix_gated_multiseed.py --mode calm --threshold 3.0 --width 0.3 --seeds 5 --epochs 400
-
-# θ = 3.5
+python main_vix_gated_multiseed.py --mode calm --threshold 3.0 --width 0.3 --seeds 5 --epochs 400  # sweet spot
 python main_vix_gated_multiseed.py --mode calm --threshold 3.5 --width 0.3 --seeds 5 --epochs 400
 ```
 
-**Width sensitivity sweep (confirm θ = 3.0 is not width-specific):**
+**Width sensitivity sweep** (confirms θ = 3.0 is not specific to one width value):
 
 ```bash
 python main_vix_gated_multiseed.py --mode calm --threshold 3.0 --width 0.15 --seeds 5 --epochs 400
@@ -463,16 +456,18 @@ python main_vix_gated_multiseed.py --mode calm --threshold 2.5 --width 0.60 --se
 
 **Expected results at θ = 3.0, width = 0.3:**
 
-| Window           | Plain Adam        | Regime-gated θ=3.0 |
-|------------------|------------------:|-------------------:|
-| 2024 OOT (calm)  | +1.16 ± 0.06      | **+1.11 ± 0.10**   |
-| 2020 COVID       | −8.05 ± 4.96      | **−1.18 ± 0.41**   |
-| 2008 GFC         | ~−25              | −2.35 ± 0.47       |
-| Max seed-std     | 4.96              | 0.47 (↓ 10×)       |
+| Window           | Plain Adam        | Regime-gated θ=3.0  |
+|------------------|------------------:|--------------------:|
+| 2024 OOT (calm)  | +1.16 ± 0.06      | **+1.11 ± 0.10**    |
+| 2020 COVID       | −8.05 ± 4.96      | **−1.18 ± 0.41**    |
+| 2008 GFC         | ~−25              | −2.35 ± 0.47        |
+| Max seed-std     | 4.96              | 0.47 (↓ 10×)        |
 
-Both pre-registered decision rules are met with strong margins.
+Both pre-registered decision rules are met with strong margins across all 5 seeds.
 
-**Width-sensitivity result:** At θ = 3.0 the 2024 win and COVID closure hold across widths 0.15, 0.30, 0.60 (4× range). At θ = 2.5 both widths fail. The threshold is the load-bearing parameter; the width is not.
+**Width-sensitivity result:** At θ = 3.0 the 2024 win and COVID closure both hold across widths 0.15, 0.30, 0.60 (4× range). At θ = 2.5 both width extremes fail. The threshold is the load-bearing parameter; the width is not.
+
+**One-line interpretation:** Turn off VIX hedging when normalised VIX rises above 3× the window-start level. In absolute terms this corresponds to VIX ≳ 50 — COVID-class severity. The gate fires in 2008 and 2020; it does not fire in 2017, 2022, 2023, or 2024.
 
 ---
 
@@ -482,7 +477,7 @@ Both pre-registered decision rules are met with strong margins.
 |---|---|---|
 | Base CVaR vs delta-hedge | `main.py` | ~+1.5 (Heston sim) |
 | CVaR + variance swap | `main_varswap_cvar.py` | ~+3.5 (Heston sim) |
-| Bates robustness | `main_bates.py` | advantage preserved |
+| Bates jump robustness | `main_bates.py` | advantage preserved |
 | Multi-asset spread | `main_multi_asset.py` | +30% over Margrabe |
 | Sim-to-real transfer | `main_sim_to_real.py` | gap ~5–8 (crisis) |
 | VIX leverage-corrected | `main_vix_futures_v2.py` | +1.16 calm, −8.05 COVID |
@@ -495,13 +490,13 @@ Both pre-registered decision rules are met with strong margins.
 
 For a reader who wants to reproduce only the thesis-central results:
 
-1. `main_varswap_cvar.py` — Week 1 headline (variance swap adds value)
-2. `main_bootstrap.py` — Week 3 (statistical significance)
-3. `main_historical_stress.py` — Week 7 (sim-to-real gap exists)
-4. `main_vix_futures_v2.py` — Week 11 (VIX policy, calm win established)
-5. `main_vix_multiseed.py --mode calm` then `--mode covid` — Week 12 (problem characterised)
-6. `main_vix_mom_multiseed.py --mode covid` — Week 13 Option B (negative result)
-7. `main_vix_gated_multiseed.py --threshold 3.0 --width 0.3 --mode calm` — Week 13 Option A (main result)
+1. `main_varswap_cvar.py` — variance swap adds value on simulated data
+2. `main_bootstrap.py` — statistical significance confirmed
+3. `main_historical_stress.py` — sim-to-real gap exists on real crisis data
+4. `main_vix_futures_v2.py` — VIX policy established, calm-market win confirmed
+5. `main_vix_multiseed.py --mode calm` then `--mode covid` — problem precisely characterised
+6. `main_vix_mom_multiseed.py --mode covid` — Option B falsified (negative result)
+7. `main_vix_gated_multiseed.py --threshold 3.0 --width 0.3 --mode calm` — main result
 
 Total wall-clock on a single GPU: approximately 6–8 hours for steps 5–7.
 
@@ -511,10 +506,10 @@ Total wall-clock on a single GPU: approximately 6–8 hours for steps 5–7.
 
 All experiments use either:
 
-- **Simulated data** — generated on-the-fly from Heston/Bates/SABR; no download needed.
+- **Simulated data** — generated on-the-fly from Heston / Bates / SABR simulators; no download needed.
 - **Real SPX/VIX data** — downloaded automatically via `yfinance` on first run. An internet connection is required. Data is not cached to disk by default.
 
-The following windows are used for out-of-training evaluation:
+The following evaluation windows are used:
 
 | Window label     | Date range              | Type        |
 |------------------|-------------------------|-------------|
@@ -526,4 +521,4 @@ The following windows are used for out-of-training evaluation:
 | 2023 SVB         | 2023-01-01 – 2023-12-31 | Mild stress |
 | 2024 Full year   | 2024-01-01 – 2024-12-31 | OOT calm    |
 
-The 2024 window is the primary out-of-training test; all other windows are used for stress evaluation only.
+The 2024 window is the primary out-of-training test. All other windows are used for stress evaluation only.

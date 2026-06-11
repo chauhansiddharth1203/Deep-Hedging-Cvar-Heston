@@ -15,7 +15,7 @@ print("\n=== Bootstrap CVaR Significance Tests (95%) ===")
 
 # CVaR vs Delta
 mean_diff, lo, hi = bootstrap_cvar_difference(
-    pnl_cvar, pnl_delta, alpha
+ pnl_cvar, pnl_delta, alpha
 )
 print("\nCVaR Deep Hedge vs Delta Hedge:")
 print(f"Mean CVaR difference: {mean_diff:.2f}")
@@ -23,7 +23,7 @@ print(f"95% CI: [{lo:.2f}, {hi:.2f}]")
 
 # Entropic vs Delta
 mean_diff, lo, hi = bootstrap_cvar_difference(
-    pnl_entropic, pnl_delta, alpha
+ pnl_entropic, pnl_delta, alpha
 )
 print("\nEntropic Hedge vs Delta Hedge:")
 print(f"Mean CVaR difference: {mean_diff:.2f}")
@@ -31,7 +31,7 @@ print(f"95% CI: [{lo:.2f}, {hi:.2f}]")
 
 # Variance vs Delta
 mean_diff, lo, hi = bootstrap_cvar_difference(
-    pnl_variance, pnl_delta, alpha
+ pnl_variance, pnl_delta, alpha
 )
 print("\nVariance Hedge vs Delta Hedge:")
 print(f"Mean CVaR difference: {mean_diff:.2f}")

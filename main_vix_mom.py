@@ -24,38 +24,38 @@ os.makedirs("results", exist_ok=True)
 
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--epochs", type=int, default=400)
-    ap.add_argument("--N",      type=int, default=512)
-    ap.add_argument("--lam",    type=float, default=0.5)
-    ap.add_argument("--lr",     type=float, default=1e-4)
-    ap.add_argument("--seed",   type=int, default=0)
-    ap.add_argument("--k",      type=int, default=9,
-                    help="MoM block count (odd recommended)")
-    ap.add_argument("--save",   default="results/vix_mom.pth")
-    args = ap.parse_args()
+ ap = argparse.ArgumentParser()
+ ap.add_argument("--epochs", type=int, default=400)
+ ap.add_argument("--N", type=int, default=512)
+ ap.add_argument("--lam", type=float, default=0.5)
+ ap.add_argument("--lr", type=float, default=1e-4)
+ ap.add_argument("--seed", type=int, default=0)
+ ap.add_argument("--k", type=int, default=9,
+ help="MoM block count (odd recommended)")
+ ap.add_argument("--save", default="results/vix_mom.pth")
+ args = ap.parse_args()
 
-    tr_s, tr_v, te_s, te_v = load_spy_vix()
-    s_tr = VIXBootstrap(tr_s, tr_v)
-    s_te = VIXBootstrap(te_s, te_v)
-    print(f"Train weekly obs: {len(tr_s)}, Test: {len(te_s)}")
-    print(f"MoM gradient: k={args.k} blocks of ~{args.N // args.k} samples each")
-    print(f"lr={args.lr}  N={args.N}  epochs={args.epochs}")
+ tr_s, tr_v, te_s, te_v = load_spy_vix()
+ s_tr = VIXBootstrap(tr_s, tr_v)
+ s_te = VIXBootstrap(te_s, te_v)
+ print(f"Train weekly obs: {len(tr_s)}, Test: {len(te_s)}")
+ print(f"MoM gradient: k={args.k} blocks of ~{args.N // args.k} samples each")
+ print(f"lr={args.lr} N={args.N} epochs={args.epochs}")
 
-    policy, hist = train_mom(s_tr, s_te, args.epochs, args.N, args.lam,
-                             args.lr, args.seed, k=args.k)
-    torch.save(policy.state_dict(), args.save)
-    print(f"Saved -> {args.save}")
+ policy, hist = train_mom(s_tr, s_te, args.epochs, args.N, args.lam,
+ args.lr, args.seed, k=args.k)
+ torch.save(policy.state_dict(), args.save)
+ print(f"Saved -> {args.save}")
 
-    print("\n=== Evaluation ===")
-    res = evaluate(policy)
+ print("\n=== Evaluation ===")
+ res = evaluate(policy)
 
-    tag = f"vix_mom_k{args.k}_s{args.seed}"
-    write_metrics(res, hist, f"results/{tag}_metrics.txt")
-    plot_learning(hist, f"results/{tag}_learning.png")
-    plot_cvar(res, f"results/{tag}_cvar.png")
-    print(f"\nArtifacts in results/{tag}_*.{{txt,png}}")
+ tag = f"vix_mom_k{args.k}_s{args.seed}"
+ write_metrics(res, hist, f"results/{tag}_metrics.txt")
+ plot_learning(hist, f"results/{tag}_learning.png")
+ plot_cvar(res, f"results/{tag}_cvar.png")
+ print(f"\nArtifacts in results/{tag}_*.{{txt,png}}")
 
 
 if __name__ == "__main__":
-    main()
+ main()
