@@ -6,7 +6,7 @@ def cvar(pnl: torch.Tensor, alpha: float = 0.95) -> torch.Tensor:
     Compute CVaR (Expected Shortfall)
 
     Args:
-        pnl   : Tensor of shape (N,) — profit & loss samples
+        pnl   : Tensor of shape (N,) -- profit & loss samples
         alpha : confidence level (e.g. 0.95)
 
     Returns:

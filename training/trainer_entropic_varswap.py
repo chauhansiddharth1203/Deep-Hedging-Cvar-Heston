@@ -13,7 +13,7 @@ def train_entropic_varswap(
 ):
     """
     Train stock+variance-swap hedging policy with entropic risk objective.
-    Loss = (1/λ) * log(E[exp(-λ * PnL)])
+    Loss = (1/lambda) * log(E[exp(-lambda * PnL)])
     """
 
     policy.train()

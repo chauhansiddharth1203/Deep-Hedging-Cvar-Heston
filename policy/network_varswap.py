@@ -52,11 +52,12 @@ class HedgingPolicyVarSwap(nn.Module):
     def forward(self, state):
         return self.net(state)
 
-    def rollout(self, S_path, VS_path, payoff_fn):
+    def rollout(self, S_path, VS_path, payoff_fn, return_logs=False):
         """
         S_path  : (T+1,)  stock price path
         VS_path : (T+1,)  variance swap price path
         payoff_fn: callable
+        return_logs: if True, also return per-step trade log dict
         """
         device = S_path.device
         T = S_path.shape[0] - 1
@@ -65,11 +66,14 @@ class HedgingPolicyVarSwap(nn.Module):
         prev_delta_S = torch.zeros((), device=device)
         prev_delta_V = torch.zeros((), device=device)
 
+        log = {"t": [], "S": [], "VS": [], "delta_S": [], "delta_V": [],
+               "gain_S": [], "gain_V": [], "tc": [], "cum_pnl": []}
+
         for t in range(T):
             state = torch.stack([
                 S_path[t]  / self.S0,
                 VS_path[t] / self.VS0,
-                torch.tensor(t / T,       device=device),
+                torch.tensor(t / T, device=device),
                 prev_delta_S,
                 prev_delta_V,
             ])
@@ -78,16 +82,32 @@ class HedgingPolicyVarSwap(nn.Module):
             delta_S = torch.tanh(action[0]) * 5.0
             delta_V = torch.tanh(action[1]) * 5.0
 
-            # P&L from hedging gains (using positions set at t)
-            pnl += prev_delta_S * (S_path[t + 1]  - S_path[t])
-            pnl += prev_delta_V * (VS_path[t + 1] - VS_path[t])
+            gain_S = prev_delta_S * (S_path[t + 1] - S_path[t])
+            gain_V = prev_delta_V * (VS_path[t + 1] - VS_path[t])
+            tc     = (self.cost_rate * torch.abs(delta_S - prev_delta_S) * (S_path[t] / self.S0)
+                    + self.cost_rate * torch.abs(delta_V - prev_delta_V) * (VS_path[t] / self.VS0))
 
-            # Proportional transaction costs (price-adjusted)
-            pnl -= self.cost_rate * torch.abs(delta_S - prev_delta_S) * (S_path[t]  / self.S0)
-            pnl -= self.cost_rate * torch.abs(delta_V - prev_delta_V) * (VS_path[t] / self.VS0)
+            pnl += gain_S + gain_V - tc
+
+            if return_logs:
+                log["t"].append(t)
+                log["S"].append(S_path[t].item())
+                log["VS"].append(VS_path[t].item())
+                log["delta_S"].append(delta_S.item())
+                log["delta_V"].append(delta_V.item())
+                log["gain_S"].append(gain_S.item())
+                log["gain_V"].append(gain_V.item())
+                log["tc"].append(tc.item())
+                log["cum_pnl"].append(pnl.item())
 
             prev_delta_S = delta_S
             prev_delta_V = delta_V
 
         pnl -= payoff_fn(S_path[-1])
+
+        if return_logs:
+            log["option_payoff"] = payoff_fn(S_path[-1]).item()
+            log["final_pnl"]     = pnl.item()
+            return pnl, log
+
         return pnl

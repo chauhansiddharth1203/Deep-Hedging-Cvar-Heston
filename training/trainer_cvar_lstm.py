@@ -36,13 +36,13 @@ def train_cvar_lstm(
 
         optimizer.zero_grad()
         loss.backward()
-        # Gradient clipping — LSTM gradients can explode
+        # Gradient clipping -- LSTM gradients can explode
         torch.nn.utils.clip_grad_norm_(policy.parameters(), max_norm=1.0)
         optimizer.step()
 
         if epoch % print_every == 0 or epoch == epochs - 1:
             print(
-                f"Epoch {epoch:3d}  α={alpha:.3f}  CVaR Loss {loss.item():.4f}"
+                f"Epoch {epoch:3d}  alpha={alpha:.3f}  CVaR Loss {loss.item():.4f}"
             )
 
     torch.save(policy.state_dict(), "results/lstm_cvar.pth")

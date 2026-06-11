@@ -51,21 +51,21 @@ def main():
     # ------------------------------------------------------------------ #
     # 1. Evaluate all models                                              #
     # ------------------------------------------------------------------ #
-    print("Evaluating stock-only models …")
+    print("Evaluating stock-only models ...")
     stock_only = {
         "CVaR (stock)":     evaluate_policy(load_stock_only("results/deep_hedge_var_cvar_annealed.pth", 0.0002), device=device, N=5000),
         "Variance (stock)": evaluate_policy(load_stock_only("results/deep_hedge_variance.pth"),           device=device, N=5000),
         "Entropic (stock)": evaluate_policy(load_stock_only("results/deep_hedge_entropic.pth"),           device=device, N=5000),
     }
 
-    print("Evaluating stock+variance-swap models …")
+    print("Evaluating stock+variance-swap models ...")
     varswap = {
         "CVaR (stock+VS)":     evaluate_varswap_policy(load_varswap("results/varswap_cvar.pth",      0.0002), device=device, N=5000),
         "Variance (stock+VS)": evaluate_varswap_policy(load_varswap("results/varswap_variance.pth"),         device=device, N=5000),
         "Entropic (stock+VS)": evaluate_varswap_policy(load_varswap("results/varswap_entropic.pth"),         device=device, N=5000),
     }
 
-    # evaluate_policy returns (deep_cvar, delta_cvar) — unpack
+    # evaluate_policy returns (deep_cvar, delta_cvar) -- unpack
     delta_cvar = stock_only["CVaR (stock)"][1]     # same baseline for all
 
     results = {}
@@ -77,9 +77,9 @@ def main():
     # ------------------------------------------------------------------ #
     # 2. Print table                                                      #
     # ------------------------------------------------------------------ #
-    print(f"\n{'Model':<28} {'CVaR':>10} {'Δ vs Delta':>12}")
+    print(f"\n{'Model':<28} {'CVaR':>10} {'Delta vs Delta':>12}")
     print("-" * 52)
-    print(f"{'Delta Hedge (baseline)':<28} {delta_cvar:>10.4f} {'—':>12}")
+    print(f"{'Delta Hedge (baseline)':<28} {delta_cvar:>10.4f} {'--':>12}")
     for name, m in results.items():
         delta = m["CVaR"] - delta_cvar
         print(f"{name:<28} {m['CVaR']:>10.4f} {delta:>+12.4f}")
@@ -91,8 +91,8 @@ def main():
     cvar_vals  = [results[n]["CVaR"]          for n in names]
     deltas     = [results[n]["CVaR"] - delta_cvar for n in names]
 
-    colours = ["#2196F3", "#2196F3", "#2196F3",   # stock-only — blue
-               "#FF5722", "#FF5722", "#FF5722"]    # stock+VS   — orange
+    colours = ["#2196F3", "#2196F3", "#2196F3",   # stock-only -- blue
+               "#FF5722", "#FF5722", "#FF5722"]    # stock+VS   -- orange
 
     fig, ax = plt.subplots(figsize=(10, 5))
     bars = ax.bar(names, deltas, color=colours, edgecolor="black", linewidth=0.6)
@@ -128,7 +128,7 @@ def main():
     ax2.hist(pnl_vs.numpy(),    bins=bins, alpha=0.5, label="CVaR (stock + VS)",   color="#FF5722")
     ax2.set_xlabel("PnL")
     ax2.set_ylabel("Frequency")
-    ax2.set_title("PnL Distribution: CVaR Objective — Stock vs Stock+VarSwap")
+    ax2.set_title("PnL Distribution: CVaR Objective -- Stock vs Stock+VarSwap")
     ax2.legend()
     plt.tight_layout()
     plt.savefig("results/varswap_pnl_comparison.png", dpi=150)

@@ -39,7 +39,7 @@ def train_cvar_varswap(
 
         pnls = torch.stack(pnls)
 
-        # Pure CVaR objective — no mean term to prevent speculative VS positions
+        # Pure CVaR objective -- no mean term to prevent speculative VS positions
         loss = -cvar(pnls, alpha)
 
         optimizer.zero_grad()
@@ -49,7 +49,7 @@ def train_cvar_varswap(
 
         if epoch % print_every == 0 or epoch == epochs - 1:
             print(
-                f"Epoch {epoch:3d}  α={alpha:.3f}  CVaR Loss {loss.item():.4f}"
+                f"Epoch {epoch:3d}  alpha={alpha:.3f}  CVaR Loss {loss.item():.4f}"
             )
 
     torch.save(policy.state_dict(), "results/varswap_cvar.pth")

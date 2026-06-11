@@ -16,8 +16,8 @@ def simulate_heston_with_var_swap(
 
     This normalises the two instruments so that their per-step P&L standard
     deviations are equal:
-        Std(ΔS)  ≈ S0 * sqrt(v0 * dt)            ≈ 3.65
-        Std(ΔVS) = sigma_v * sqrt(v0 * dt) * S0/sigma_v = S0 * sqrt(v0 * dt) ≈ 3.65
+        Std(DeltaS)  ≈ S0 * sqrt(v0 * dt)            ≈ 3.65
+        Std(DeltaVS) = sigma_v * sqrt(v0 * dt) * S0/sigma_v = S0 * sqrt(v0 * dt) ≈ 3.65
 
     Equal volatility prevents the network from over-weighting the variance swap
     and keeps training stable.
@@ -25,7 +25,7 @@ def simulate_heston_with_var_swap(
     Returns:
         S         : (N, T+1) stock price paths
         VS        : (N, T+1) variance swap price paths  (= v * S0 / sigma_v)
-        payoff_fn : callable — European call payoff max(S_T - K, 0)
+        payoff_fn : callable -- European call payoff max(S_T - K, 0)
     """
 
     dt = 1.0 / T

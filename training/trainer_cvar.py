@@ -58,7 +58,7 @@ def train(
         if epoch % print_every == 0 or epoch == epochs - 1:
             print(
                 f"Epoch {epoch}, "
-                f"α={alpha:.3f}, "
+                f"alpha={alpha:.3f}, "
                 f"CVaR Loss {loss.item():.4f}"
             )
 

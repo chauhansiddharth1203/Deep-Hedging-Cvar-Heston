@@ -64,7 +64,7 @@ def main():
         pnl_mlp = evaluate(mlp_policy)
         print("Loaded pre-trained MLP.")
     except FileNotFoundError:
-        print("MLP weights not found — train main.py first for a fair comparison.")
+        print("MLP weights not found -- train main.py first for a fair comparison.")
         pnl_mlp = None
 
     torch.manual_seed(99)
@@ -90,7 +90,7 @@ def main():
         ax.hist(pnl_mlp.cpu().numpy(), bins=bins, alpha=0.5, color="#2196F3", label="MLP (CVaR)")
     ax.set_xlabel("PnL")
     ax.set_ylabel("Frequency")
-    ax.set_title("PnL Distribution: LSTM vs MLP — CVaR Objective")
+    ax.set_title("PnL Distribution: LSTM vs MLP -- CVaR Objective")
     ax.legend()
     plt.tight_layout()
     plt.savefig("results/lstm_vs_mlp_pnl.png", dpi=150)

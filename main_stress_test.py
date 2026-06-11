@@ -39,7 +39,7 @@ def main():
         ),
     }
 
-    print("\n=== Stress Test Results (σ_v × 1.5) ===")
+    print("\n=== Stress Test Results (σ_v x 1.5) ===")
 
     for name, policy in policies.items():
         res = evaluate_under_stress(

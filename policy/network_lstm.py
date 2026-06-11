@@ -19,7 +19,7 @@ class HedgingPolicyLSTM(nn.Module):
     as an implicit estimate of the latent variance.
 
     Action:
-        delta = tanh(linear(h_t)) * 5,   delta ∈ [-5, 5]
+        delta = tanh(linear(h_t)) * 5,   delta in [-5, 5]
 
     The rollout keeps the LSTM hidden state (h, c) across timesteps.
     """

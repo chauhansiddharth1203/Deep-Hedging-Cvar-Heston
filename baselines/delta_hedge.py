@@ -4,7 +4,7 @@ import math
 
 def bs_call_delta(S, K, tau, r, sigma, eps=1e-6):
     """
-    Black–Scholes delta for a call option
+    Black-Scholes delta for a call option
     S: Tensor (batch,)
     tau: float or Tensor
     """
